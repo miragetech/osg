@@ -59,6 +59,7 @@ public:
     int _maxTextureDimension;
     std::vector<std::string> _specificBuffers;
     std::map<std::string, std::ofstream*> _buffers;
+    std::string _databasePath;
 
     std::ofstream& getBufferFile(const std::string& name) {
         if(_buffers.find(name) == _buffers.end()) {
@@ -446,6 +447,7 @@ public:
     void setVarint(bool use) { _varint = use; }
     void setMaxTextureDimension(int use) { _maxTextureDimension = use; }
     void addSpecificBuffer(const std::string& bufferFlag) { _specificBuffers.push_back(bufferFlag); }
+    void setDatabasePath(const std::string& databasePath)  { _databasePath = databasePath; }
 };
 
 #endif

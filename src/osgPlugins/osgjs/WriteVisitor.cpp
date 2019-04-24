@@ -648,6 +648,16 @@ JSONObject* WriteVisitor::createJSONPagedLOD(osg::PagedLOD *plod)
     }
     jsonPlod->getMaps()["RangeList"] = rangeObject;
     // File List
+    std::stringstream outputOptions;
+    outputOptions << std::boolalpha;
+    outputOptions << "resizeTextureUpToPowerOf2=" << std::to_string(_maxTextureDimension);
+    outputOptions << " useExternalBinaryArray=" << _useExternalBinaryArray;
+    outputOptions << " mergeAllBinaryFiles=" << _mergeAllBinaryFiles;
+    outputOptions << " inlineImages=" << _inlineImages;
+    outputOptions << " varint=" << _varint;
+
+    osg::ref_ptr<osgDB::Options> writeOpts = new osgDB::Options(outputOptions.str());
+    writeOpts->setDatabasePath(_databasePath);
 
     JSONObject* fileObject = new JSONObject;
     for (unsigned int i =0; i< plod->getNumFileNames(); i++)
@@ -661,7 +671,7 @@ JSONObject* WriteVisitor::createJSONPagedLOD(osg::PagedLOD *plod)
         if (n)
         {
             std::string filename(osgDB::getStrippedName(plod->getFileName(i))+".osgjs");
-            osgDB::writeNodeFile(*n,filename);
+            osgDB::writeNodeFile(*n, _databasePath + "/" + filename, writeOpts);
             fileObject->getMaps()[str] =  new JSONValue<std::string>(filename);
         }
         else
