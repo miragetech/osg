@@ -48,6 +48,7 @@ public:
          bool varint;
          bool strictJson;
          std::vector<std::string> useSpecificBuffer;
+         std::string databasePath;
 
          OptionsStruct() {
              resizeTextureUpToPowerOf2 = 0;
@@ -57,6 +58,7 @@ public:
              inlineImages = false;
              varint = false;
              strictJson = true;
+             databasePath = "";
          }
     };
 
@@ -86,6 +88,9 @@ public:
         if (!acceptsExtension(ext)) return WriteResult::FILE_NOT_HANDLED;
 
         OptionsStruct _options = parseOptions(options);
+
+        _options.databasePath = options->getDatabasePathList().empty() ? osgDB::getFilePath(fileName) : options->getDatabasePathList().front();
+
         json_stream fout(fileName, _options.strictJson);
 
         if(fout) {
@@ -127,6 +132,7 @@ public:
             writer.inlineImages(options.inlineImages);
             writer.setMaxTextureDimension(options.resizeTextureUpToPowerOf2);
             writer.setVarint(options.varint);
+            writer.setDatabasePath(options.databasePath);
             for(std::vector<std::string>::const_iterator specificBuffer = options.useSpecificBuffer.begin() ;
                 specificBuffer != options.useSpecificBuffer.end() ; ++ specificBuffer) {
                 writer.addSpecificBuffer(*specificBuffer);
