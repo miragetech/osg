@@ -900,8 +900,6 @@ JSONObject* WriteVisitor::createJSONPagedLOD(osg::PagedLOD *plod)
             std::string fullFilePath(osgDB::getFilePath(_baseName) + osgDB::getNativePathSeparator() + filename);
             fileObject->getMaps()[str] =  new JSONValue<std::string>(_baseLodURL + filename);
             osgDB::makeDirectoryForFile(fullFilePath);
-            if (_baseLodURL.empty())
-                _baseLodURL = osgDB::getFilePath(filename) + osgDB::getNativePathSeparator() ;
             osg::ref_ptr<osgDB::Options> options =  osgDB::Registry::instance()->getOptions()->cloneOptions();
             options->setPluginStringData(std::string("baseLodURL"), _baseLodURL);
 
