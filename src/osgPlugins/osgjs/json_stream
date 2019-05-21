@@ -48,7 +48,9 @@ class json_stream : public osgDB::ofstream {
         json_stream(const std::string& filename, bool strict=true) :
             _stream(filename.c_str()),
             _strict(strict)
-        {}
+        {
+            _stream << std::setprecision(15);
+        }
 
         ~json_stream() {
             _stream.close();
