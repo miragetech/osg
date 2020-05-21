@@ -107,9 +107,9 @@ class json_stream : public osgDB::ofstream {
         }
 
         std::string sanitize(const std::string& s) {
-            if(_strict) {
-                return to_json_utf8(s);
-            }
+            //if(_strict) {
+            //    return to_json_utf8(s);
+            //}
             return s;
         }
 
@@ -125,7 +125,7 @@ class json_stream : public osgDB::ofstream {
 
 
     protected:
-        std::ofstream _stream;
+        osgDB::ofstream _stream;
         bool _strict;
 };
 

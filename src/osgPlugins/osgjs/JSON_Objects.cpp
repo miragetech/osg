@@ -306,7 +306,7 @@ std::pair<unsigned int,unsigned int> JSONVertexArray::writeMergeData(const osg::
                                                                      const std::string& filename,
                                                                      std::string& encoding)
 {
-    std::ofstream& output = visitor.getBufferFile(filename);
+    osgDB::ofstream& output = visitor.getBufferFile(filename);
     unsigned int offset = output.tellp();
 
     if(visitor._varint && isVarintableIntegerBuffer(array))

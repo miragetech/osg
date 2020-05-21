@@ -191,7 +191,7 @@ struct JSONVertexArray : public JSONArray
 
     unsigned int writeData(const osg::Array* array, const std::string& filename)
     {
-        std::ofstream myfile;
+        osgDB::ofstream myfile;
         myfile.open(filename.c_str(), std::ios::binary );
         const char* b = static_cast<const char*>(array->getDataPointer());
         myfile.write(b, array->getTotalDataSize());

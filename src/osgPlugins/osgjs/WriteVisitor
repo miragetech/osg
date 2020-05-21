@@ -76,7 +76,7 @@ public:
     int _maxTextureDimension;
     bool _varint;
     std::map<KeyValue, std::string> _specificBuffers;
-    std::map<std::string, std::ofstream*> _buffers;
+    std::map<std::string, osgDB::ofstream*> _buffers;
 
     JSONObject* getJSON(osg::Object* object) const {
         OsgObjectToJSONObject::const_iterator lookup = _maps.find(object);
@@ -92,9 +92,9 @@ public:
         }
     }
 
-    std::ofstream& getBufferFile(const std::string& name) {
+    osgDB::ofstream& getBufferFile(const std::string& name) {
         if(_buffers.find(name) == _buffers.end()) {
-            _buffers[name] = new std::ofstream(name.c_str(), std::ios::binary);
+            _buffers[name] = new osgDB::ofstream(name.c_str(), std::ios::binary);
         }
         return *_buffers[name];
     }
@@ -109,7 +109,7 @@ public:
     {}
 
     ~WriteVisitor() {
-        for(std::map<std::string, std::ofstream*>::iterator buffer = _buffers.begin() ;
+        for(std::map<std::string, osgDB::ofstream*>::iterator buffer = _buffers.begin() ;
             buffer != _buffers.end() ; ++ buffer) {
             delete buffer->second;
         }
@@ -132,7 +132,7 @@ public:
     }
 
     void closeBuffers() {
-        for(std::map<std::string, std::ofstream*>::iterator buffer = _buffers.begin() ;
+        for(std::map<std::string, osgDB::ofstream*>::iterator buffer = _buffers.begin() ;
             buffer != _buffers.end() ; ++ buffer) {
             buffer->second->close();
         }
@@ -140,7 +140,7 @@ public:
 
     unsigned int getBuffersSize() const {
         unsigned int size = 0;
-        for(std::map<std::string, std::ofstream*>::const_iterator buffer = _buffers.begin() ;
+        for(std::map<std::string, osgDB::ofstream*>::const_iterator buffer = _buffers.begin() ;
             buffer != _buffers.end() ; ++ buffer) {
             size += buffer->second->tellp();
         }

@@ -245,11 +245,11 @@ JSONObject* createImage(osg::Image* image, bool inlineImages, int maxTextureDime
         if (!image->getFileName().empty()) { // means that everything went ok
             if (inlineImages) {
 
-                std::ifstream in(osgDB::findDataFile(image->getFileName()).c_str(), std::ifstream::in | std::ifstream::binary);
+                osgDB::ifstream in(osgDB::findDataFile(image->getFileName()).c_str(), osgDB::ifstream::in | osgDB::ifstream::binary);
                 if (in.is_open() && in.good())
                 {
                     // read file first to iterate
-                    in.seekg(0, std::ifstream::end);
+                    in.seekg(0, osgDB::ifstream::end);
                     const std::ifstream::pos_type size = in.tellg();
                     in.seekg(0, std::ifstream::beg);
                     std::vector<unsigned char> rawData;
